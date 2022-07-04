@@ -1,0 +1,6 @@
+# Artifacts
+build/
+
+# IDEs
+.vscode/
+.idea/

@@ -6,15 +6,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(hidapi_name)
-if (WIN32)
-elseif (APPLE)
-    set(hidapi_name hidapi)
-elseif (UNIX AND NOT APPLE)
-    set(hidapi_name hidapi-libusb)
-endif()
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(HIDAPI REQUIRED ${hidapi_name})
+if(WIN32)
+elseif(APPLE)
+        set(hidapi_name hidapi)
+elseif(UNIX AND NOT APPLE)
+        set(hidapi_name hidapi-libusb)
+endif()
 
 set(LEDGERCPP_SOURCE
         ledgercpp/comm.hpp
@@ -28,21 +26,24 @@ set(LEDGERCPP_SOURCE
         ledgercpp/transport.hpp
         ledgercpp/utils.cpp
         ledgercpp/utils.hpp
-        )
+)
 
 add_library(ledgercpp ${LEDGERCPP_SOURCE})
 add_library(ledgercpp::ledgercpp ALIAS ledgercpp)
 
+add_subdirectory(extlibs/hidapi)
+target_link_libraries(ledgercpp hidapi)
+
 target_include_directories(ledgercpp
         PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        )
+)
 
 file(GLOB_RECURSE EDV_INCLUDE_FILES "ledgercpp/*.hpp*")
 set_target_properties(ledgercpp
         PROPERTIES
         PUBLIC_HEADER "${EDV_INCLUDE_FILES}"
-        )
+)
 
 include(GNUInstallDirs)
 install(TARGETS ledgercpp
@@ -50,4 +51,7 @@ install(TARGETS ledgercpp
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ledgercpp
-        )
+)
+
+add_executable(ledgercpp_test ledgercpp/main.cpp)
+target_link_libraries(ledgercpp_test ledgercpp::ledgercpp)

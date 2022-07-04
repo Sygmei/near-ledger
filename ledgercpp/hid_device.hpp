@@ -2,7 +2,7 @@
 
 #include "ledgercpp/comm.hpp"
 
-#include "hidapi/hidapi.h"
+#include "hidapi.h"
 
 namespace ledger {
 	class HID final : public Comm {
