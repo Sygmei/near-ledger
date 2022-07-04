@@ -15,6 +15,13 @@ namespace ledger {
 		return transport_->open();
 	}
 
+	std::tuple<ledger::Error, std::vector<uint8_t>> Ledger::get_version(std::vector<uint8_t> account, uint8_t p1, uint8_t p2) {
+		auto [err, buffer] = transport_->exchange(APDU::CLA_NEAR, APDU::INS_GET_APP_CONFIGURATION_NEAR, p1, p2, account);
+		if (err != Error::SUCCESS)
+			return {err, {}};
+		return {err, std::vector<uint8_t>(buffer.begin(), buffer.end())};
+	}
+
 	std::tuple<ledger::Error, std::vector<uint8_t>> Ledger::get_public_key(std::vector<uint8_t> account, uint8_t p1, uint8_t p2) {
 		auto [err, buffer] = transport_->exchange(APDU::CLA_NEAR, APDU::INS_GET_PUBLIC_KEY_NEAR, p1, p2, account);
 		if (err != Error::SUCCESS)
