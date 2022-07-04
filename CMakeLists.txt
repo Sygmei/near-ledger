@@ -11,6 +11,7 @@ if(WIN32)
 elseif(APPLE)
         set(hidapi_name hidapi)
 elseif(UNIX AND NOT APPLE)
+        add_compile_definitions(PLATFORM_LINUX)
         set(hidapi_name hidapi-libusb)
 endif()
 
@@ -32,7 +33,7 @@ add_library(ledgercpp ${LEDGERCPP_SOURCE})
 add_library(ledgercpp::ledgercpp ALIAS ledgercpp)
 
 add_subdirectory(extlibs/hidapi)
-target_link_libraries(ledgercpp hidapi)
+target_link_libraries(ledgercpp hidapi::hidapi)
 
 target_include_directories(ledgercpp
         PUBLIC

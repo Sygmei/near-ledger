@@ -2,7 +2,11 @@
 
 #include "ledgercpp/comm.hpp"
 
+#ifdef PLATFORM_LINUX
+#include "hidapi/hidapi.h"
+#else
 #include "hidapi.h"
+#endif
 
 namespace ledger {
 	class HID final : public Comm {
