@@ -19,7 +19,7 @@ namespace ledger {
 		auto [err, buffer] = transport_->exchange(APDU::CLA_NEAR, APDU::INS_GET_PUBLIC_KEY_NEAR, confirm, 87, account);
 		if (err != Error::SUCCESS)
 			return {err, {}};
-		return {err, std::vector<uint8_t>(buffer.begin() + 1, buffer.end())};
+		return {err, std::vector<uint8_t>(buffer.begin(), buffer.end())};
 	}
 
 	std::tuple<Error, std::vector<uint8_t>> Ledger::sign(std::vector<uint8_t> account, const std::vector<uint8_t>& msg) {
@@ -28,7 +28,7 @@ namespace ledger {
 		auto [err, buffer] = transport_->exchange(APDU::CLA_NEAR, APDU::INS_SIGN_NEAR, 0x00, 87, payload);
 		if (err != Error::SUCCESS)
 			return {err, {}};
-		return {err, std::vector<uint8_t>(buffer.begin() + 1, buffer.end())};
+		return {err, std::vector<uint8_t>(buffer.begin(), buffer.end())};
 	}
 
 	void Ledger::close() {
