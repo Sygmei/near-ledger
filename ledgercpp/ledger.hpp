@@ -21,7 +21,7 @@ namespace ledger {
 
 		Error open();
 
-		std::tuple<Error, std::vector<uint8_t>> get_version(std::vector<uint8_t> account, uint8_t p1 = 0x00, uint8_t p2 = 0x00);
+		std::tuple<Error, std::vector<uint8_t>> get_version(uint8_t p1 = 0x00, uint8_t p2 = 0x00);
 		std::tuple<Error, std::vector<uint8_t>> get_public_key(std::vector<uint8_t> account, uint8_t p1 = 0x00, uint8_t p2 = 0x00);
 		std::tuple<Error, std::vector<uint8_t>> sign(std::vector<uint8_t> account, const std::vector<uint8_t>& msg, uint8_t p1 = 0x00, uint8_t p2 = 0x00);
 

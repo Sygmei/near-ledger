@@ -96,7 +96,7 @@ int main(int argc, char** argv)
     //     std::cout << (int)data_byte << ",";
     // std::cout << std::endl;
 
-    ret = nano.get_version(account);
+    ret = nano.get_version();
     std::cout << ledger::error_message(std::get<0>(ret)) << std::endl;
     std::cout << "Version: " << std::endl;
     for (uint8_t data_byte: std::get<1>(ret))
