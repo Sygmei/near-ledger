@@ -1,6 +1,6 @@
-#include "ledgercpp/error.hpp"
-#include "ledgercpp/ledger.hpp"
-#include "ledgercpp/utils.hpp"
+#include <nearledger/error.hpp>
+#include <nearledger/ledger.hpp>
+#include <nearledger/utils.hpp>
 
 namespace ledger {
 	Ledger::Ledger() : transport_(std::make_unique<Transport>(Transport::TransportType::HID)) {

@@ -1,11 +1,13 @@
 #pragma once
 
-#include "ledgercpp/comm.hpp"
+#include <string>
+
+#include <nearledger/comm.hpp>
 
 #ifdef PLATFORM_LINUX
-#include "hidapi/hidapi.h"
+#include <hidapi/hidapi.h>
 #else
-#include "hidapi.h"
+#include <hidapi.h>
 #endif
 
 namespace ledger {

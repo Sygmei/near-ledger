@@ -1,9 +1,8 @@
 #pragma once
 
-#include <string>
 #include <vector>
 
-#include "error.hpp"
+#include <nearledger/error.hpp>
 
 namespace ledger {
 	class Comm {

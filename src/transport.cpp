@@ -1,6 +1,6 @@
-#include "ledgercpp/error.hpp"
-#include "ledgercpp/hid_device.hpp"
-#include "ledgercpp/transport.hpp"
+#include <nearledger/error.hpp>
+#include <nearledger/hid_device.hpp>
+#include <nearledger/transport.hpp>
 
 namespace ledger {
 	Transport::Transport(TransportType type) {

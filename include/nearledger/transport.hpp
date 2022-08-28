@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ledgercpp/comm.hpp"
-
 #include <memory>
+
+#include <nearledger/comm.hpp>
 
 namespace ledger {
 	class Transport {

@@ -1,6 +1,6 @@
-#include "ledgercpp/error.hpp"
-#include "ledgercpp/hid_device.hpp"
-#include "ledgercpp/utils.hpp"
+#include <nearledger/error.hpp>
+#include <nearledger/hid_device.hpp>
+#include <nearledger/utils.hpp>
 
 #include <cassert>
 

@@ -1,6 +1,10 @@
 #pragma once
 
-#include "ledgercpp/transport.hpp"
+#include <cstdint>
+#include <tuple>
+#include <vector>
+
+#include <nearledger/transport.hpp>
 
 namespace ledger {
 	class Ledger {

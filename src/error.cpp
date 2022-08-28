@@ -1,4 +1,4 @@
-#include "error.hpp"
+#include <nearledger/error.hpp>
 
 namespace ledger {
 	std::string error_message(Error code) {
