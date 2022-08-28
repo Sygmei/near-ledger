@@ -84,13 +84,34 @@ int main(int argc, char** argv)
 {
     const std::vector<uint8_t> account = bip32_path_to_bytes("44'/397'/0'/0'/1'");
     ledger::Ledger nano;
-    auto err = nano.open();
+    std::tuple<ledger::Error, std::vector<uint8_t>> ret;
+
+    ledger::Error err = nano.open();
     std::cout << ledger::error_message(err) << std::endl;
-    // auto err2 = nano.get_public_key(account, false);
-    // std::cout << ledger::error_message(std::get<0>(err2)) << std::endl;
-    const std::vector<uint8_t> tx_data = { 24, 0, 0, 0, 116, 101, 115, 116, 45, 99, 111, 110, 110, 101, 99, 116, 45, 108, 101, 100, 103, 101, 114, 46, 116, 101, 115, 116, 0, 114, 6, 142, 2, 154, 152, 9, 199, 242, 218, 121, 200, 162, 116, 116, 63, 245, 247, 237, 206, 36, 214, 72, 189, 19, 233, 127, 112, 147, 160, 49, 50, 4, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 118, 103, 80, 220, 110, 71, 221, 204, 178, 66, 31, 39, 222, 194, 6, 213, 234, 70, 148, 66, 42, 28, 47, 195, 92, 168, 194, 227, 99, 138, 2, 170, 207, 75, 1, 0, 0, 0, 3, 0, 0, 64, 189, 139, 91, 147, 107, 108, 0, 0, 0, 0, 0, 0, 0 };
-    const std::vector<uint8_t> actually_signable_tx_data = { 128,0,0,44,128,0,1,141,128,0,0,0,128,0,0,0,128,0,0,1,64,0,0,0,51,54,49,49,100,53,52,56,97,55,54,52,51,56,101,50,52,56,56,50,99,54,51,48,49,52,54,49,101,97,51,48,98,53,97,100,57,97,97,99,102,99,102,100,55,100,55,100,97,50,53,53,99,48,52,49,49,53,102,50,102,101,53,98,0,54,17,213,72,167,100,56,226,72,130,198,48,20,97,234,48,181,173,154,172,252,253,125,125,162,85,192,65,21,242,254,91,199,121,220,40,2,55,0,0,9,0,0,0,97,117,98,101,46,110,101,97,114,8,246,144,251,125,85,26,99,17,74,127,4,26,202,72,2,76,151,68,138,232,23,199,231,124,51,125,23,63,53,131,87,1,0,0,0,3,0,0,64,123,165,240,99,129,150,10,0,0,0,0,0,0 };
-    auto err3 = nano.sign(account, tx_data);
-    std::cout << ledger::error_message(std::get<0>(err3)) << std::endl;
+
+    // ret = nano.get_public_key(account);
+    // std::cout << ledger::error_message(std::get<0>(ret)) << std::endl;
+    // std::cout << "Publick Key: " << std::endl;
+    // for (uint8_t data_byte: std::get<1>(ret))
+    //     std::cout << (int)data_byte << ",";
+    // std::cout << std::endl;
+
+    ret = nano.get_version();
+    std::cout << ledger::error_message(std::get<0>(ret)) << std::endl;
+    std::cout << "Version: " << std::endl;
+    for (uint8_t data_byte: std::get<1>(ret))
+        std::cout << (int)data_byte << ".";
+    std::cout << std::endl;
+
+    const std::vector<uint8_t> signable_tx = {
+        20,0,0,0,108,101,100,103,101,114,103,97,109,101,115,50,46,116,101,115,116,110,101,116,0,191,217,62,20,113,68,168,64,193,148,49,64,151,0,208,244,69,221,23,94,60,139,209,167,237,247,57,103,18,235,172,11,199,208,85,142,133,85,0,0,9,0,0,0,116,101,115,116,46,110,101,97,114,43,38,82,152,20,83,70,135,150,46,91,191,61,18,60,128,77,231,72,20,150,248,160,195,84,158,101,170,11,109,22,72,1,0,0,0,3,0,0,0,161,237,204,206,27,194,211,0,0,0,0,0,0
+    };
+    ret = nano.sign(account, signable_tx, /*p1==P1_LAST*/0x80);
+    std::cout << ledger::error_message(std::get<0>(ret)) << std::endl;
+        std::cout << "Signature: " << std::endl;
+    for (uint8_t data_byte: std::get<1>(ret))
+        std::cout << (int)data_byte << ",";
+    std::cout << std::endl;
+
     nano.close();
 }
